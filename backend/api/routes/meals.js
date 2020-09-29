@@ -1,6 +1,5 @@
 const express = require('express')
 const Meals = require('../models/Meals')
-const app = express()
 
 const router = express.Router()
 
@@ -25,7 +24,7 @@ router.put('/:id', (req, res) => {
 		.then(() => res.sendStatus(204))
 })
 
-router.delete('/', (req, res) => {
+router.delete('/:id', (req, res) => {
 	Meals.findOneAndDelete(req.params.id)
 		.exec()
 		.then(() => res.sendStatus(204))

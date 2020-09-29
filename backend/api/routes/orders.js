@@ -24,7 +24,7 @@ router.put('/:id', (req, res) => {
 		.then(() => res.sendStatus(204))
 })
 
-router.delete('/', (req, res) => {
+router.delete('/:id', (req, res) => {
 	Orders.findOneAndDelete(req.params.id)
 		.exec()
 		.then(() => res.sendStatus(204))

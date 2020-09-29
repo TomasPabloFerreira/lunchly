@@ -2,6 +2,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const meals = require('./routes/meals')
+const orders = require('./routes/orders')
 
 const app = express()
 
@@ -13,8 +15,7 @@ mongoose.connect(process.env.MONGO_URI, {
 	useUnifiedTopology: true
 })
 
-app.get('*', (req, res) => {
-	res.send('working!!')
-})
+app.use('/api/meals', meals)
+app.use('/api/orders', orders)
 
 module.exports = app

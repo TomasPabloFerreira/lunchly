@@ -9,7 +9,11 @@ const Stack = createStackNavigator()
 const AppNavigator = () => {
 	return (
 		<Stack.Navigator initialRouteName="Meals">
-			<Stack.Screen name="Meals" component={MealsScreen} />
+			<Stack.Screen
+				name="Meals"
+				component={MealsScreen}
+				options={{ title: 'Meals available' }}
+			/>
 		</Stack.Navigator>
 	)
 }

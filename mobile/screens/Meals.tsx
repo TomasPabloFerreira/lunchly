@@ -1,9 +1,7 @@
-import { NavigationAction } from '@react-navigation/native'
-import { StackNavigationOptions, StackNavigationProp } from '@react-navigation/stack'
-import { StackNavigationHelpers } from '@react-navigation/stack/lib/typescript/src/types'
 import React from 'react'
-import { View, StyleSheet, FlatList } from 'react-native'
+import { View, StyleSheet, FlatList, Text } from 'react-native'
 import ListItem from '../components/ListItem'
+import useFetch from '../hooks/useFetch'
 
 const styles = StyleSheet.create({
 	container: {
@@ -17,28 +15,33 @@ const styles = StyleSheet.create({
 	}
 })
 
-const testdata = [
-	{ _id: 'lala', name: 'Steak', description: 'Tipical food!!' }
-]
-
 type MealsProps = { navigation: any }
+ 
+const Meals = ({ navigation } : MealsProps) => {
+	const { loading, data: meals } : { loading: boolean, data: Meal[] } =
+		useFetch('https://lunchly-api.tomasferreira.vercel.app/api/meals')
 
-export default ({ navigation } : MealsProps) => {
 	return (
 		<View style={styles.container}>
-			<FlatList
-				style={styles.list}
-				data={testdata}
-				keyExtractor={x => x._id}
-				renderItem={({ item }) =>
-					<ListItem
-						onPress={() => {
-							navigation.navigate('Modal', { _id: item._id })
-						}}
-						name={item.name}
-					/>
-				}
-			/>
+			{ loading 
+				? <Text>Loading...</Text>
+				:
+				<FlatList
+					style={styles.list}
+					data={meals}
+					keyExtractor={x => x._id}
+					renderItem={({ item }) =>
+						<ListItem
+							onPress={() => {
+								navigation.navigate('Modal', { _id: item._id })
+							}}
+							name={item.name}
+						/>
+					}
+				/>
+			}
 		</View>
 	)
 }
+
+export default Meals 
